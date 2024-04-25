@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta(charset='UTF-8')
-    title Contact Manager
+    title Gerenciar Contato
 
     link(rel='preconnect', href='https://fonts.googleapis.com')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
@@ -12,7 +12,7 @@ html
   body
     header
       a(href='/contacts')
-        h1 Contact Manager
+        h1 Gerenciador de Contatos
 
     section#sidebar
       include sidebar.pug
@@ -26,6 +26,6 @@ html
         when 'edit'
           include form.pug
         default
-          p Select a contact
+          p Selecione um contato
 
     script(src='https://unpkg.com/htmx.org@1.9.10')

@@ -1,6 +1,6 @@
 h2 #{contact.name}
 
-p #[strong Name:] #{contact.name}
+p #[strong Nome:] #{contact.name}
 p #[strong Email:] #{contact.email}
 
 div.actions
@@ -11,11 +11,11 @@ div.actions
       hx-target='#sidebar',
       hx-push-url='/contacts'
       class='link'
-    ) Delete Contact
+    ) Exclua o Contato
 
   a(
     href=`/contacts/${contact.id}/edit`,
     hx-get=`/contacts/${contact.id}/edit`,
     hx-push-url='true',
     hx-target='#content'
-  ) Edit Contact
+  ) Edite o Contato

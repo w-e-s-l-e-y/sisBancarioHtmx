@@ -1,6 +1,6 @@
 - isEditing = () => !(Object.keys(contact).length === 0);
 
-h2=isEditing() ? "Edit Contact" : "New Contact"
+h2=isEditing() ? "Edite o contato" : "Novo contato"
 
 form(
   action=isEditing() ? `/update/${contact.id}?_method=PUT` : '/contacts',
@@ -12,11 +12,11 @@ form(
   hx-push-url=isEditing() ? `/contacts/${contact.id}` : false
   hx-on::after-request='if(event.detail.successful) this.reset()',
 )
-  label(for='name') Name:
+  label(for='name') Nome:
   input#name(type='text', name='name', required, value=contact.name)
 
   label(for='email') Email:
   input#email(type='email', name='email', required, value=contact.email)
 
   div.actions
-    button(type='submit') Submit
+    button(type='submit') Enviar

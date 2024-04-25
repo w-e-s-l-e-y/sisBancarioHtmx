@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost';
+const { baseUrl } = require('../config');
 
 
 const { JSDOM } = require('jsdom');
@@ -56,14 +56,14 @@ describe('Contact List tests', () => {
   
     contactItems.forEach((contactItem, index) => {
       const contactLink = contactItem.querySelector('a');
-      expect(contactLink.href).toBe(`${baseUrl}${contacts[index].href}`);
+      expect(contactLink.getAttribute('href')).toBe(contacts[index].href);
       expect(contactLink.textContent).toBe(contacts[index].name);
     });
   });
   
   it('deve conter um link para adicionar um novo contato', () => {
     const newContactLink = document.querySelector('.actions a');
-    expect(newContactLink.href).toBe(`${baseUrl}/contacts/new`);
+    expect(newContactLink.getAttribute('href')).toBe('/contacts/new');
     expect(newContactLink.textContent).toBe('New Contact');
   });
   
