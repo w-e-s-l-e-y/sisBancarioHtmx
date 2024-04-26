@@ -17,17 +17,19 @@ const contacts = [
 
 // GET /contacts
 router.get('/contacts', (req, res) => {
-  res.render('index', { action: '', contacts, contact: {} });
+  res.status(200).render('index', { action: '', contacts, contact: {} });
 });
+
 
 // GET /contacts/new
 router.get('/contacts/new', (req, res) => {
   if (req.headers['hx-request']) {
     res.render('form', { contact: {} });
   } else {
-    res.render('index', { action: 'new', contacts, contact: {} });
+    res.status(200).render('index', { action: 'new', contacts, contact: {} });
   }
 });
+
 
 // GET /contacts/1
 router.get('/contacts/:id', (req, res) => {
@@ -37,9 +39,10 @@ router.get('/contacts/:id', (req, res) => {
   if (req.headers['hx-request']) {
     res.render('contact', { contact });
   } else {
-    res.render('index', { action: 'show', contacts, contact });
+    res.status(200).render('index', { action: 'show', contacts, contact });
   }
 });
+
 
 // GET /contacts/1/edit
 router.get('/contacts/:id/edit', (req, res) => {
@@ -49,7 +52,7 @@ router.get('/contacts/:id/edit', (req, res) => {
   if (req.headers['hx-request']) {
     res.render('form', { contact });
   } else {
-    res.render('index', { action: 'edit', contacts, contact });
+    res.status(200).render('index', { action: 'edit', contacts, contact });
   }
 });
 

@@ -13,6 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use('/', routes);
 
-const server = app.listen(3000, () => {
-  console.log(`Express is running on port ${server.address().port}`);
-});
+if (require.main === module) {
+  const server = app.listen(3000, () => {
+    console.log(`Express is running on port 3000`);
+  });
+}
+// Exporta o app para que ele possa ser importado em outros arquivos, como os testes
+module.exports = app;

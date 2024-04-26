@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Login
+    link(rel="stylesheet", href="styles.css")
+  body
+    .container
+      h2 Bem Vindo ao Banco WYK
+      form(action="/login", method="post")
+        label(for="nome") Nome:
+        input(type="text", id="nome", name="nome", required)
+        label(for="numeroConta") Número da Conta:
+        input(type="text", id="numeroConta", name="numeroConta", required)
+        button(type="submit") Confirmar
+      p#status

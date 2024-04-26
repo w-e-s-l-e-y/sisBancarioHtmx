@@ -1,5 +1,6 @@
-const { baseUrl } = require('../config');
+const baseUrl = '';
 
+const { render, screen } = require('@testing-library/dom');
 
 const { JSDOM } = require('jsdom');
 const { fireEvent } = require('@testing-library/dom');
@@ -56,14 +57,14 @@ describe('Contact List tests', () => {
   
     contactItems.forEach((contactItem, index) => {
       const contactLink = contactItem.querySelector('a');
-      expect(contactLink.getAttribute('href')).toBe(contacts[index].href);
+      expect(contactLink.href).toBe(`${baseUrl}${contacts[index].href}`);
       expect(contactLink.textContent).toBe(contacts[index].name);
     });
   });
   
   it('deve conter um link para adicionar um novo contato', () => {
     const newContactLink = document.querySelector('.actions a');
-    expect(newContactLink.getAttribute('href')).toBe('/contacts/new');
+    expect(newContactLink.href).toBe(`${baseUrl}/contacts/new`);
     expect(newContactLink.textContent).toBe('New Contact');
   });
   
