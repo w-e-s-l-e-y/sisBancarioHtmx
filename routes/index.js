@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const router = express.Router();
 
@@ -29,6 +30,17 @@ router.get('/contacts/new', (req, res) => {
     res.status(200).render('index', { action: 'new', contacts, contact: {} });
   }
 });
+
+// Defina a rota para a página de login
+router.get('/login', (req, res) => {
+  res.send('Esta é a página de login'); // Ou res.render() para renderizar um arquivo Pug
+});
+
+// Defina a rota para a página de cadastro
+router.get('/cadastro', (req, res) => {
+  res.render('cadastro'); // Renderiza o arquivo Pug 'cadastro.pug'
+});
+
 
 
 // GET /contacts/1

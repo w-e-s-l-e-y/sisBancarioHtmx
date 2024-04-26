@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom');
 const { fireEvent } = require('@testing-library/dom');
-const TelaInicio = require('../views/TelaInicio'); // Importe a classe TelaInicio conforme necessário
+const TelaInicio = require('../views/TelaInicio.pug'); // Importe a classe TelaInicio conforme necessário
 
 describe('TelaInicio tests', () => {
   let document;

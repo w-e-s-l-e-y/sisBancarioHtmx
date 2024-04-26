@@ -189,3 +189,34 @@ p + .actions {
   border-radius: 3px;
   box-shadow: 0 2px 4px var(--color-shadow);
 }
+
+#titulo {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+#botoes {
+  display: flex;
+  justify-content: center;
+}
+
+#btnLogin,
+#btnCadastro {
+  padding: 1rem 2rem;
+  margin: 0 1rem;
+  font-size: 1.2rem;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnLogin:hover,
+#btnCadastro:hover {
+  background-color: var(--color-link-hover);
+}
