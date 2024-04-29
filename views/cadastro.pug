@@ -5,6 +5,104 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Cadastro de Cliente
     link(rel="stylesheet", href="styles.css")
+    style.
+      :root {
+        --color-primary: #3273dc;
+        --color-secondary: #23d160;
+        --color-background: #f9f9f9;
+        --color-text: #363636;
+        --color-white: #fff;
+        --color-light-gray: #ccc;
+        --color-link-hover: #255aa7;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      input,
+      button {
+        font: inherit;
+      }
+
+      body {
+        font-family: Roboto, sans-serif;
+        font-size: 62.5%;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--color-text);
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h2 {
+        margin-bottom: 2rem;
+        font-size: 2.3rem;
+        color: var(--color-primary);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"] {
+        width: 400px;
+        margin-bottom: 1rem;
+        padding: 0.8rem;
+        font-size: 1.6rem;
+        background-color: var(--color-background);
+        border: 1px solid var(--color-light-gray);
+      }
+
+      input:focus {
+        border-color: var(--color-primary);
+        outline: none;
+      }
+
+      button[type="submit"] {
+        padding: 1rem 2rem;
+        font-size: 1.6rem;
+        color: var(--color-white);
+        background-color: var(--color-primary);
+        border: none;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: var(--color-link-hover);
+      }
+
+      .success-message {
+        display: none; /* Inicia oculto */
+        margin-top: 1rem; /* Espaçamento superior */
+        font-size: 1.6rem;
+        color: green; /* Cor da mensagem de sucesso */
+      }
   body
     .container
       h2 Cadastro de Cliente
@@ -12,11 +110,20 @@ html(lang="en")
         label(for="nome") Nome:
         input(type="text", id="nome", name="nome", required)
         label(for="idade") Idade:
-        input(type="number", id="idade", name="idade", required)
+        input(type="number", id="idade", name="idade", required, min="0")
         label(for="email") Email:
         input(type="email", id="email", name="email", required)
         label(for="tipo") Tipo:
-        input(type="number", id="tipo", name="tipo", required)
+        input(type="number", id="tipo", name="tipo", required, min="0")
         label(for="saldoInicial") Saldo Inicial:
-        input(type="number", id="saldoInicial", name="saldoInicial", required)
+        input(type="number", id="saldoInicial", name="saldoInicial", required, min="0")
         button(type="submit") Cadastrar
+
+      // Div para mostrar a mensagem de sucesso
+div.success-message= successMessage
+
+// Script para redirecionar para a página inicial após 2 segundos, apenas se estivermos na página de cadastro
+script.
+  setTimeout(function() {
+    window.location.href = "/";
+  }, 2000);

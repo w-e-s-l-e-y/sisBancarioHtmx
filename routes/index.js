@@ -1,39 +1,78 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
+const { Cliente } = require('../db/models');
 
 const router = express.Router();
 
-const contacts = [
-  { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
-  { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com' },
-  { id: 3, name: 'Emily Johnson', email: 'emily.johnson@example.com' },
-  { id: 4, name: 'Aarav Patel', email: 'aarav.patel@example.com' },
-  { id: 5, name: 'Liu Wei', email: 'liu.wei@example.com' },
-  { id: 6, name: 'Fatima Zahra', email: 'fatima.zahra@example.com' },
-  { id: 7, name: 'Carlos Hernández', email: 'carlos.hernandez@example.com' },
-  { id: 8, name: 'Olivia Kim', email: 'olivia.kim@example.com' },
-  { id: 9, name: 'Kwame Nkrumah', email: 'kwame.nkrumah@example.com' },
-  { id: 10, name: 'Chen Yu', email: 'chen.yu@example.com' },
-];
+// Configuração do middleware de sessão
+router.use(session({
+  secret: 'suaChaveSecretaAqui',
+  resave: false,
+  saveUninitialized: true
+}));
 
-// GET /contacts
-router.get('/contacts', (req, res) => {
-  res.status(200).render('index', { action: '', contacts, contact: {} });
-});
-
-
-// GET /contacts/new
-router.get('/contacts/new', (req, res) => {
-  if (req.headers['hx-request']) {
-    res.render('form', { contact: {} });
-  } else {
-    res.status(200).render('index', { action: 'new', contacts, contact: {} });
+// Middleware para redirecionamento após cadastro bem-sucedido
+const redirecionarAposCadastro = (req, res, next) => {
+  if (req.cadastroSucesso) {
+    // Configura a mensagem de sucesso na sessão
+    req.session.successMessage = 'Cliente cadastrado com sucesso!';
   }
+  next(); // Continue com o próximo middleware ou tratamento de rota
+};
+
+
+// Defina a rota para a página inicial
+router.get('/', (req, res) => {
+  // Renderize a página inicial e passe a mensagem de sucesso, se houver
+  res.render('index', { successMessage: req.session.successMessage });
+  // Limpe a mensagem de sucesso após exibi-la
+  delete req.session.successMessage;
 });
 
 // Defina a rota para a página de login
 router.get('/login', (req, res) => {
-  res.send('Esta é a página de login'); // Ou res.render() para renderizar um arquivo Pug
+  res.render('login'); // Renderiza o arquivo Pug 'login.pug'
+});
+
+// POST /login
+router.post('/login', async (req, res) => {
+  const { nome, numeroConta } = req.body;
+
+  try {
+    // Verifique se existe um cliente com o nome e número da conta fornecidos
+    const cliente = await Cliente.findOne({ where: { nome, id: numeroConta } });
+
+    if (cliente) {
+      // Se o cliente existir, redirecione para a tela da conta corrente
+      res.redirect('/conta-corrente'); 
+    } else {
+      console.log('Cliente não encontrado:', nome, numeroConta);
+      // Se os dados não forem válidos, renderize a página de login novamente com uma mensagem de erro
+      res.render('login', { error: 'Nome ou número da conta inválidos. Por favor, tente novamente.' });
+    }
+  } catch (error) {
+    console.error('Erro ao verificar dados de login:', error);
+    res.status(500).send('Erro ao verificar dados de login. Por favor, tente novamente mais tarde.');
+  }
+});
+
+// GET /conta-corrente
+router.get('/conta-corrente', async (req, res) => {
+  try {
+    // Aqui você pode fazer qualquer lógica necessária para carregar os dados da conta-corrente
+    // por exemplo, buscar os dados do banco de dados ou de outra fonte de dados
+    // e então renderizar a página correspondente
+    res.render('conta-corrente'); // Substitua 'conta-corrente' pelo nome do arquivo Pug correspondente
+  } catch (error) {
+    console.error('Erro ao carregar página de conta-corrente:', error);
+    res.status(500).send('Erro ao carregar página de conta-corrente. Por favor, tente novamente mais tarde.');
+  }
+});
+
+// POST /conta-corrente (redireciona para a rota GET correspondente)
+router.post('/conta-corrente', (req, res) => {
+  res.redirect('/conta-corrente');
 });
 
 // Defina a rota para a página de cadastro
@@ -41,110 +80,30 @@ router.get('/cadastro', (req, res) => {
   res.render('cadastro'); // Renderiza o arquivo Pug 'cadastro.pug'
 });
 
+// Rota POST /cadastro
+router.post('/cadastro', async (req, res, next) => {
+  const { nome, idade, email, tipo, saldoInicial } = req.body;
 
-
-// GET /contacts/1
-router.get('/contacts/:id', (req, res) => {
-  const { id } = req.params;
-  const contact = contacts.find((c) => c.id === Number(id));
-
-  if (req.headers['hx-request']) {
-    res.render('contact', { contact });
-  } else {
-    res.status(200).render('index', { action: 'show', contacts, contact });
-  }
-});
-
-
-// GET /contacts/1/edit
-router.get('/contacts/:id/edit', (req, res) => {
-  const { id } = req.params;
-  const contact = contacts.find((c) => c.id === Number(id));
-
-  if (req.headers['hx-request']) {
-    res.render('form', { contact });
-  } else {
-    res.status(200).render('index', { action: 'edit', contacts, contact });
-  }
-});
-
-// POST /contacts
-router.post('/contacts', (req, res) => {
-  const newContact = {
-    id: contacts.length + 1,
-    name: req.body.name,
-    email: req.body.email,
-  };
-
-  contacts.push(newContact);
-
-  if (req.headers['hx-request']) {
-    res.render('sidebar', { contacts }, (err, sidebarHtml) => {
-      const html = `
-        <main id="content" hx-swap-oob="afterbegin">
-          <p class="flash">Contact was successfully added!</p>
-        </main>
-        ${sidebarHtml}
-      `;
-      res.send(html);
+  try {
+    // Crie um novo cliente com os dados fornecidos
+    const novoCliente = await Cliente.create({
+      nome,
+      idade,
+      email,
+      tipo,
+      saldoInicial,
+      ativo: 1 // Definindo ativo como 1 por padrão
     });
-  } else {
-    res.render('index', { action: 'new', contacts, contact: {} });
+
+    // Marca que o cadastro foi bem-sucedido
+    req.cadastroSucesso = true;
+    req.novoCliente = novoCliente; // Armazena o novo cliente nos dados da requisição
+    next(); // Chama o próximo middleware
+  } catch (error) {
+    // Se houver um erro ao criar o cliente, envie uma resposta com status 400 (Bad Request)
+    console.error('Erro ao cadastrar cliente:', error);
+    res.status(400).json({ error: 'Erro ao cadastrar cliente. Verifique os dados fornecidos.' });
   }
-});
-
-// PUT /contacts/1
-router.put('/update/:id', (req, res) => {
-  const { id } = req.params;
-
-  const newContact = {
-    id: Number(id),
-    name: req.body.name,
-    email: req.body.email,
-  };
-
-  const index = contacts.findIndex((c) => c.id === Number(id));
-
-  if (index !== -1) contacts[index] = newContact;
-
-  if (req.headers['hx-request']) {
-    res.render('sidebar', { contacts }, (err, sidebarHtml) => {
-      res.render('contact', { contact: contacts[index] }, (err, contactHTML) => {
-        const html = `
-          ${sidebarHtml}
-          <main id="content" hx-swap-oob="true">
-            <p class="flash">Contact was successfully updated!</p>
-            ${contactHTML}
-          </main>
-        `;
-
-        res.send(html);
-      });
-    });
-  } else {
-    res.redirect(`/contacts/${index + 1}`);
-  }
-});
-
-// DELETE /contacts/1
-router.delete('/delete/:id', (req, res) => {
-  const { id } = req.params;
-  const index = contacts.findIndex((c) => c.id === Number(id));
-
-  if (index !== -1) contacts.splice(index, 1);
-  if (req.headers['hx-request']) {
-    res.render('sidebar', { contacts }, (err, sidebarHtml) => {
-      const html = `
-        <main id="content" hx-swap-oob="true">
-          <p class="flash">Contact was successfully deleted!</p>
-        </main>
-        ${sidebarHtml}
-      `;
-      res.send(html);
-    });
-  } else {
-    res.redirect('/contacts');
-  }
-});
+}, redirecionarAposCadastro); // Aplica o middleware de redirecionamento após o tratamento da rota de cadastro
 
 module.exports = router;

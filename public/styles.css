@@ -5,10 +5,7 @@
   --color-text: #363636;
   --color-white: #fff;
   --color-light-gray: #ccc;
-  --color-flash: #48c78e;
-  --color-flash-text: #f9f9f9;
   --color-link-hover: #255aa7;
-  --color-shadow: rgba(0 0 0 / 20%);
 }
 
 *,
@@ -28,11 +25,6 @@ button {
 }
 
 body {
-  display: grid;
-  grid-template: "header header" min-content "sidebar content" auto / 275px auto;
-
-  height: 100vh;
-
   font-family: Roboto, sans-serif;
   font-size: 62.5%;
   font-weight: 400;
@@ -40,174 +32,51 @@ body {
   color: var(--color-text);
 }
 
-header {
-  position: relative;
-
-  grid-area: header;
-
-  background-color: var(--color-primary);
-  border-bottom: 1px solid var(--color-light-gray);
-  box-shadow: 0 6px 12px var(--color-shadow);
-}
-
-#sidebar {
-  grid-area: sidebar;
-  padding: 25px;
-  background-color: var(--color-background);
-}
-
-#content {
-  grid-area: content;
-  padding: 25px;
-}
-
-header a {
-  display: block;
-
-  height: 100%;
-  padding: 20px;
-
-  color: var(--color-white);
-  text-decoration: none;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 300;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-size: 2.3rem;
-  line-height: 1;
   color: var(--color-primary);
 }
 
-ul {
-  font-size: 1.2rem;
-  list-style: none;
-}
-
-ul li::before {
-  content: '•';
-
-  display: inline-block;
-
-  width: 1rem;
-
-  font-weight: bold;
-  color: var(--color-secondary);
-}
-
-ul a {
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.actions a,
-.actions button {
-  font-size: 1.1rem;
-  color: var(--color-primary);
-}
-
-button.link {
-  cursor: pointer;
-
-  padding: 0 !important;
-
-  text-decoration: underline;
-
-  background: none !important;
-  border: none;
-}
-
-ul a:hover {
-  text-decoration: underline;
-}
-
-p {
-  font-size: 1.2rem;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 label {
   display: block;
-  margin-bottom: 0.2rem;
-  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.6rem;
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="number"] {
   width: 400px;
   margin-bottom: 1rem;
-  padding: 0.3rem;
-
-  font-size: 1.2rem;
-
+  padding: 0.8rem;
+  font-size: 1.6rem;
   background-color: var(--color-background);
   border: 1px solid var(--color-light-gray);
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus {
+input:focus {
   border-color: var(--color-primary);
   outline: none;
 }
 
-button[type="submit"]:not(.link) {
-  cursor: pointer;
-
-  padding: 0.6rem 1.2rem;
-
-  font-size: 1rem;
-  color: var(--color-white);
-
-  background-color: var(--color-primary);
-  border: none;
-  border-radius: 0.3em;
-
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--color-link-hover);
-}
-
-ul + .actions,
-p + .actions {
-  margin-top: 1rem;
-}
-
-.flash {
-  width: 400px;
-  margin-bottom: 2rem;
-  padding: 0.8rem;
-
-  font-size: 1.1rem;
-  color: var(--color-flash-text);
-
-  background-color: var(--color-flash);
-  border-radius: 3px;
-  box-shadow: 0 2px 4px var(--color-shadow);
-}
-
-#titulo {
-  font-size: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  color: var(--color-primary);
-}
-
-#botoes {
-  display: flex;
-  justify-content: center;
-}
-
-#btnLogin,
-#btnCadastro {
+button[type="submit"] {
   padding: 1rem 2rem;
-  margin: 0 1rem;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: var(--color-white);
   background-color: var(--color-primary);
   border: none;
@@ -216,7 +85,27 @@ p + .actions {
   transition: background-color 0.3s ease;
 }
 
-#btnLogin:hover,
-#btnCadastro:hover {
+button[type="submit"]:hover {
+  background-color: var(--color-link-hover);
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 3rem;
+}
+
+button {
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
   background-color: var(--color-link-hover);
 }
