@@ -6,7 +6,10 @@ html(lang="en")
     title Sistema Bancário
     link(rel="stylesheet", href="styles.css")
   body
-    h1 Bem-vindo ao Sistema Bancário
-    button(type="button") Depósito
-    button(type="button") Saque
-    button(type="button") Transferir
+    h1 Acesse o Serviço desejado:
+    button(type="button", id="depositoBtn" onclick="window.location.href='/realizar-deposito'") Depósito
+    button(type="button", id="saqueBtn" onclick="window.location.href='/realizar-saque'") Saque
+    button(type="button", id="transferirBtn" onclick="window.location.href='/realizar-transferencia'") Transferir
+
+// botao de sair para deslogar o usuario e redirecionar para a tela de login
+button(type="button", id="sairBtn" onclick="window.location.href='/'") Sair

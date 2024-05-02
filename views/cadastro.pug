@@ -118,12 +118,4 @@ html(lang="en")
         label(for="saldoInicial") Saldo Inicial:
         input(type="number", id="saldoInicial", name="saldoInicial", required, min="0")
         button(type="submit") Cadastrar
-
-      // Div para mostrar a mensagem de sucesso
-div.success-message= successMessage
-
-// Script para redirecionar para a página inicial após 2 segundos, apenas se estivermos na página de cadastro
-script.
-  setTimeout(function() {
-    window.location.href = "/";
-  }, 2000);
+        

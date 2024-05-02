@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Depósito
+    link(rel="stylesheet", href="styles.css")
+  body
+    h1 Realizar Depósito
+    form(action="/realizar-deposito", method="POST")
+      label(for="valorDeposito") Valor a ser depositado:
+      input(type="number", id="valorDeposito", name="valorDeposito", placeholder="Digite o valor a ser depositado", min="0", step="0.01", required)
+      button(type="submit") Depositar
+      // redirecione para conta-corrente /conta-corrente
+    button(type="button", name = "voltar", onclick="window.location.href='/conta-corrente'") Voltar

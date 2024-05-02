@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Transferência
+    link(rel="stylesheet", href="styles.css")
+  body
+    h1 Realizar Transferência
+    form(action="/realizar-transferencia", method="POST")
+      label(for="nomeDestinatario") Nome do destinatário:
+      input(type="text", id="nomeDestinatario", name="nomeDestinatario", placeholder="Digite o nome do destinatário", required)
+      label(for="numeroContaDestinatario") Número da conta do destinatário:
+      input(type="text", id="numeroContaDestinatario", name="numeroContaDestinatario", placeholder="Digite o número da conta do destinatário", required)
+      label(for="valorTransferencia") Valor a ser transferido:
+      input(type="number", id="valorTransferencia", name="valorTransferencia", placeholder="Digite o valor a ser transferido", min="0", step="0.01", required)
+      button(type="submit") Transferir
+    button(type="button", name="voltar", onclick="window.location.href='/conta-corrente'") Voltar

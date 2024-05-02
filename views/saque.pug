@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Saque
+    link(rel="stylesheet", href="styles.css")
+  body
+    h1 Realizar Saque
+    form(action="/realizar-saque", method="POST")
+      label(for="valorSaque") Valor a ser sacado:
+      input(type="number", id="valorSaque", name="valorSaque", placeholder="Digite o valor a ser sacado", min="0", step="0.01", required)
+      button(type="submit") Sacar
+    button(type="button", name="voltar", onclick="window.location.href='/conta-corrente'") Voltar
